@@ -1,6 +1,5 @@
 package common;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class ConfigProp {
     static Properties prop = new Properties();
-    private static String tenantName;
     private static void init() {
         try {
 			Thread currentThread = Thread.currentThread();
@@ -47,12 +45,4 @@ public final class ConfigProp {
 			return defaultValue;
 		}
 	}
-    
-    private static class ConfigSettingsHolder {
-  		public static final ConfigProp INSTANCE = new ConfigProp();
-  	}
-      
-      protected static ConfigProp getInstance() {
-  		return ConfigSettingsHolder.INSTANCE;
-  	}
 }
