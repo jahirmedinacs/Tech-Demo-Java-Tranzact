@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+//import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -18,12 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+// This class is responsible for managing WebDriver instances.
 public class Driver {
 
+    // A map to store WebDriver instances.
     private static final Map<String, WebDriver> drivers = new HashMap<>();
 
-//    public WebDriver getBrowser(String browserName, String scenarioName) {
+    // This method returns a WebDriver instance for the specified browser.
+    // It configures the browser settings and manages the WebDriver instances.
     public WebDriver getBrowser(String browserName) {
+        // Define ChromeOptions for custom settings.
         ChromeOptions options = new ChromeOptions();
         options.addArguments("force-device-scale-factor=0.75");
         options.addArguments("--disable-web-security");
@@ -36,6 +40,7 @@ public class Driver {
 
         WebDriver driver = null;
 
+        // If the platform is local, use local drivers.
         if (ConfigProp.getPlatform().equals("local")) {
             System.out.println("Using local driver");
             switch (browserName.toLowerCase()) {
@@ -64,13 +69,7 @@ public class Driver {
                     break;
             }
         } else {
-			/*
-			 * DesiredCapabilities caps = new DesiredCapabilities();
-			 * caps.setCapability("os_version", "10"); caps.setCapability("resolution",
-			 * "1920x1080"); caps.setCapability("browser", "Chrome");
-			 * caps.setCapability("browser_version", "latest"); caps.setCapability("os",
-			 * "Windows"); caps.setCapability("name", scenarioName);
-			 */
+            // If the platform is not local, use remote WebDriver.
             String remoteUrl = ConfigProp.getByKey("url.remote");
             System.out.println("Selenium grid url is: " + remoteUrl);
             try {
@@ -79,10 +78,13 @@ public class Driver {
                 e.printStackTrace();
             }
         }
+
+        // Set the default wait time for locating elements.
         Objects.requireNonNull(driver).manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         return driver;
     }
 
+    // This method closes and quits all the WebDriver instances, and removes them from the drivers map.
     public static void closeAllDrivers() {
         for (String key : drivers.keySet()) {
             drivers.get(key).close();
@@ -91,3 +93,4 @@ public class Driver {
         }
     }
 }
+

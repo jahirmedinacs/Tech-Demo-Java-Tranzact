@@ -14,11 +14,13 @@ public class CartPage extends BasePage {
     private final String btnByNameOnCartPage = "//button[normalize-space()='%s']";
     private final String removeItemByNameFromCart = "//div[@class='inventory_item_name'][normalize-space()='%s']/../..//button[normalize-space()='Remove']";
     private final String quantityOfItemByName = "//div[@class='inventory_item_name'][normalize-space()='%s']/../../../div[@class='cart_quantity'][normalize-space()]";
-    private String itemQuantity = "";
-    private String cartValue = "";
     private final By numberOfItemsOnCart = By.xpath("//span[@class='shopping_cart_badge'][normalize-space()]");
     private final String itemPriceProductCartPage = "//div[@class='cart_item_label']//div[@class='inventory_item_name'][normalize-space()='%s']/../..//div[@class='inventory_item_price']";
+
     private List<String> priceFromProductsOnCartPage = new ArrayList<>();
+
+    private String itemQuantity = "";
+    private String cartValue = "";
 
     public CartPage(WebDriver driver) {
         super(driver);

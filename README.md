@@ -1,4 +1,4 @@
-# java-selenium-base-repo
+# Tech Demo Java Tranzact
 
 ### Language and libs:
 - Java
