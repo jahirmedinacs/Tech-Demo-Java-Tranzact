@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
                 "json:target/cucumber-reports/cucumber.json"
         },
         features = {"src/test/resources/features"},
-        tags="@Demo-A",
+        tags="@Demo",
         glue = {"steps"},
         monochrome = true
 )

@@ -1,5 +1,5 @@
-Feature: SauceDemo Login Functionality
 @Demo
+Feature: SauceDemo Login Functionality
 
   @Demo-A
   Scenario: Successful Login with Valid Credentials
@@ -13,14 +13,14 @@ Feature: SauceDemo Login Functionality
     Given I am on the SauceDemo login page
     When I enter Username as "locked_out_user" and Password as "secret_sauce"
     And I click on the Login button
-    Then I should see an error message indicating the user is locked
+    Then I should get an error message indicating the user is locked
 
   @Demo-AB
   Scenario Outline: Login with multiple sets of credentials
     Given I am on the SauceDemo login page
-    When I enter Username as "<username>" and Password as "<password>"
+    When I enter Username as <username> and Password as <password>
     And I click on the Login button
-    Then I should see "<expected_result>"
+    Then I should see <expected_result>
 
     Examples:
       | username           | password     | expected_result                  |
@@ -32,34 +32,40 @@ Feature: SauceDemo Login Functionality
   Scenario: Happy Path Workflow
     Given I login to the SauceDemo website with valid credentials
     When I add "Sauce Labs Bike Light" to the cart from the Products page
-    And I navigate to the Cart page from the Products page
-    And I click on the Checkout button
-    And I fill the Checkout Information page with random data
-    And I click on the Continue button
-    And I click on the Finish button on the Checkout Overview page
-    And I click on the Menu icon
-    Then I should be able to logout
+    Then I click on the cart icon on Products Page
+    When I click on "Checkout" on the Cart page
+    Then I fill the checkout information with random data
+    Then I click on continue button on checkout page
+    Then I click on Finish on checkout overview page
+    Then I click on menu icon on top left of the header
+    And I click on "Logout" button on the displayed menu
 
   @Demo-D
   Scenario: Multiple Scenarios Workflow
     Given I login to the SauceDemo website with valid credentials
     When I change the Product Sort to "Price (low to high)" on the Products page
-    Then the selected item on the Product Sort should be "Price (low to high)"
-    And the product prices on the page should be in ascending order
-    When I add "Sauce Labs Fleece Jacket" and "Sauce Labs Onesie" to the cart
-    Then the Remove button should be enabled for "Sauce Labs Fleece Jacket" and "Sauce Labs Onesie"
-    And I capture the prices of "Sauce Labs Fleece Jacket" and "Sauce Labs Onesie" from the Products page
-    And the value on the Cart Icon should be "2"
-    When I navigate to the Cart page
-    Then the prices of "Sauce Labs Fleece Jacket" and "Sauce Labs Onesie" on the Cart page should match those captured from the Products page
-    When I remove "Sauce Labs Onesie" from the cart
-    Then the quantity of "Sauce Labs Fleece Jacket" in the cart and the value on the Cart Icon should be the same
-    When I click on the Checkout button
-    And I fill the Checkout Information page with random data
-    And I click on the Continue button
-    Then the Item total on the Checkout Overview page should match the price captured for "Sauce Labs Fleece Jacket"
-    When I click on the Finish button on the Checkout Overview page
-    Then I should see "Thank you for your order" on the Checkout Complete page
-    When I click on the Menu icon
-    Then I should be able to logout
-
+    And Verify the displayed name on the sort filter is "Price (low to high)"
+    And Verify prices from products are in ascending order
+    When I add "Sauce Labs Fleece Jacket" to the cart from the Products page
+    When I add "Sauce Labs Onesie" to the cart from the Products page
+    And Verify the Remove button is enabled for product "Sauce Labs Fleece Jacket"
+    And Verify the Remove button is enabled for product "Sauce Labs Onesie"
+    Then I save the price of product "Sauce Labs Fleece Jacket" from Product page
+    Then I save the price of product "Sauce Labs Onesie" from Product page
+    And Verify the value from cart is "2"
+    Then I click on the cart icon on Products Page
+    Then I save the price of product "Sauce Labs Fleece Jacket" from Cart page
+    Then I save the price of product "Sauce Labs Onesie" from Cart page
+    And Verify prices captured from Products page are the same as Cart page
+    Then I remove the product "Sauce Labs Onesie" on the Cart page
+    Then I capture the quantity of items added to cart from "Sauce Labs Fleece Jacket" on the Cart page
+    Then I capture the value of cart from the Cart page
+    And Verify quantity and value are the same as captured on Cart page
+    When I click on "Checkout" on the Cart page
+    Then I fill the checkout information with random data
+    Then I click on continue button on checkout page
+    Then Verify item total is same first product price captured
+    Then I click on Finish on checkout overview page
+    And Capture message "Thank you for your order!" from checkout complete page
+    Then I click on menu icon on top left of the header
+    And I click on "Logout" button on the displayed menu
